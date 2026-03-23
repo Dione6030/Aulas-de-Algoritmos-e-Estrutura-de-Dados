@@ -2,14 +2,8 @@
 
 palavra = input("Palavra: ")
 
-if palavra.isspace():
-    print("Ops... Por favor, digite uma palavra válida.")
-
-else: 
-    palavraFatiada = palavra.split()
-    
-    letraInicial = palavraFatiada[0][0]
-    
-    resultado = letraInicial + "_" * (len(palavra)-1)
-    
-    
+for letra in palavra:
+    if letra == palavra[0]:
+        print(letra, end="")
+    else:
+        print("_", end="")
