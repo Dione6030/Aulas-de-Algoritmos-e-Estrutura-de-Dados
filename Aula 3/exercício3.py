@@ -1,6 +1,6 @@
-#3. Elaborar um programa que leia uma palavra. Exiba a letra inicial (e suas ocorrências) e "_" nas demais posições.
+# 3. Elaborar um programa que leia uma palavra. Exiba a letra inicial (e suas ocorrências) e "_" nas demais posições.
 
-palavra = input("Palavra: ")
+palavra = input("Palavra: ").upper()
 
 for letra in palavra:
     if letra == palavra[0]:
