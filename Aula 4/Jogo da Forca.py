@@ -1,3 +1,5 @@
+palavras = []
+dicas = []
 while True:
     print("Bem-vindo ao Jogo da Forca!")
     print("1. Incluir palavra")
@@ -11,10 +13,10 @@ while True:
     
     palavras = []
     if opcao == 1:
-        palavra = input("Palavra: ")
-        dica = input("Uma dica: ")
-        junta = zip(palavra, dica)
-        palavras.insert(0, junta)
+        palavra = input("Palavra: ").strip()
+        dica = input("Uma palavra de dica: ").strip()
+        palavras.append((palavra))
+        dicas.append((dica))
     
     elif opcao == 2:
         print(palavras)
