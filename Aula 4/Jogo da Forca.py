@@ -4,6 +4,12 @@ import subprocess
 palavras = []
 dicas = []
 
+def limpa_tela():
+    if os.name == 'nt':
+        subprocess.run('cls', shell=True)
+    else:
+        subprocess.run('clear', shell=True)
+
 def carrega_dados():
     if not os.path.isfile("palavras.txt"):
         print("Nenhum arquivo contendo as palavras foi encontrado.")
