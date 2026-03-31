@@ -48,3 +48,10 @@ while True:
     elif opcao == 2:
         print(palavras)
         break
+
+def salva_dados():
+    with open("palavras.txt", "w") as arq:
+        for palavra, dica in zip(palavras, dicas):
+            arq.write(f"{palavra};{dica}\n")
+
+salva_dados()
