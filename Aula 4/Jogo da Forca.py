@@ -67,6 +67,11 @@ while True:
         time.sleep(2)
         os.system("cls")
         break
+    
+    else:
+        print()
+        print("Opção inválida!")
+        print()
 
 def salva_dados():
     with open("palavras.txt", "w") as arq:
