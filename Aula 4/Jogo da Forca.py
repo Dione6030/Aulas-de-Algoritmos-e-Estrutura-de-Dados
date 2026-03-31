@@ -25,8 +25,8 @@ def carrega_dados():
 
 carrega_dados()
 
+print("Bem-vindo ao Jogo da Forca!")
 while True:
-    print("Bem-vindo ao Jogo da Forca!")
     print("1. Incluir palavra")
     print("2. Listar palavras")
     print("3. Alterar dica")
@@ -36,7 +36,6 @@ while True:
     
     opcao = int(input("Escolha uma opção: ").strip())
     
-    palavras = []
     if opcao == 1:
         palavra = input("Palavra: ").strip()
         dica = input("Uma palavra de dica: ").strip()
