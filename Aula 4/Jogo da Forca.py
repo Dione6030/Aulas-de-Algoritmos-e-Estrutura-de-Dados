@@ -45,6 +45,7 @@ while True:
     
     if opcao == 1:
         limpa_tela()
+        print("Página de Inclusão")
         palavra = input("Palavra: ").strip()
         dica = input("Uma palavra de dica: ").strip()
         palavras.append((palavra))
