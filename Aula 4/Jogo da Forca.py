@@ -44,13 +44,14 @@ while True:
     opcao = int(input("Escolha uma opção: ").strip())
     
     if opcao == 1:
+        limpa_tela()
         palavra = input("Palavra: ").strip()
         dica = input("Uma palavra de dica: ").strip()
         palavras.append((palavra))
         dicas.append((dica))
         print("Palavra e Dica adicionadas.")
         time.sleep(2)
-        os.system("cls")
+        limpa_tela()
     
     elif opcao == 2:
         if not palavras:
@@ -72,7 +73,7 @@ while True:
     elif opcao == 6:
         print("Desligando...")
         time.sleep(2)
-        os.system("cls")
+        limpa_tela()
         break
     
     else:
