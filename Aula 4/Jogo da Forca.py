@@ -62,6 +62,10 @@ while True:
         print(linha)
         print()
 
+    elif opcao == 6:
+        print("Desligando...")
+        time.sleep(2)
+        os.system("cls")
         break
 
 def salva_dados():
