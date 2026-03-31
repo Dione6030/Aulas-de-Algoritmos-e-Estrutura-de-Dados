@@ -46,7 +46,22 @@ while True:
         os.system("cls")
     
     elif opcao == 2:
-        print(palavras)
+        if not palavras:
+            print("Não há palavras cadastradas.")
+        else:
+            largura_palavra = max(len("Palavra"), max(len(p) for p in palavras))
+            largura_dica = max(len("Dica"), max(len(d) for d in dicas))
+
+            linha = f"+-{'-' * largura_palavra}-+-{'-' * largura_dica}-+"
+            print(linha)
+            print(f"| {'Palavra':<{largura_palavra}} | {'Dica':<{largura_dica}} |")
+            print(linha)
+
+            for palavra, dica in zip(palavras, dicas):
+                print(f"| {palavra:<{largura_palavra}} | {dica:<{largura_dica}} |")
+        print(linha)
+        print()
+
         break
 
 def salva_dados():
