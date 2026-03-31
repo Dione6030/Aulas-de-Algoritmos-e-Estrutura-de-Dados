@@ -2,7 +2,7 @@ import random
 import time
 import os
 
-temp = "🦬🦬🫏🫏🐅🐅🐏🐏🐕🐕🦚🦚🐬🐬🐙🐙"
+temp = "🐺🐺🐱🐱🐯🐯🐴🐴🐸🐸🐖🐖🐬🐬🐦🐦"
 figuras = list(temp) # converte a string para lista
 
 print("="*40)
