@@ -41,6 +41,9 @@ while True:
         dica = input("Uma palavra de dica: ").strip()
         palavras.append((palavra))
         dicas.append((dica))
+        print("Palavra e Dica adicionadas.")
+        time.sleep(2)
+        os.system("cls")
     
     elif opcao == 2:
         print(palavras)
