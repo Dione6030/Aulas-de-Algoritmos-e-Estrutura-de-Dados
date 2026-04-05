@@ -45,6 +45,7 @@ def mostra_palavras():
     if not palavras:
         print("Não há palavras cadastradas.")
         time.sleep(2)
+        return
     else:
         largura_palavra = max(len("Palavra"), max(len(p) for p in palavras))
         largura_dica = max(len("Dica"), max(len(d) for d in dicas))
@@ -58,6 +59,24 @@ def mostra_palavras():
             print(f"|{i+1}| {palavra:<{largura_palavra}} | {dica:<{largura_dica}} |")
     print(linha)
     print()
+
+def altera_dica():
+    print("Menu de Alteração de Dica")
+    mostra_palavras()
+
+    try:
+        indice = int(input("Selecione o numero referente a dica: "))-1
+
+        if 0 <= indice < len(dicas):
+            nova_dica = input("Nova dica: ").strip()
+            dicas[indice] = nova_dica
+            print("Dica Atualizada com Sucesso. 📝")
+        else:
+            print("Número Inválido! 🙅‍♂️🙅‍♀️")
+    except:
+        print("Entrada Inválida! ❌")
+
+    time.sleep(2)
 
 print("Bem-vindo ao Jogo da Forca!")
 while True:
@@ -79,22 +98,11 @@ while True:
         limpa_tela()
         mostra_palavras()
 
-        if not palavras:
-            print("Não há palavras cadastradas.")
-        else:
-            largura_palavra = max(len("Palavra"), max(len(p) for p in palavras))
-            largura_dica = max(len("Dica"), max(len(d) for d in dicas))
-
-            linha = f"+-{'-' * largura_palavra}-+-{'-' * largura_dica}-+"
-            print(linha)
-            print(f"| {'Palavra':<{largura_palavra}} | {'Dica':<{largura_dica}} |")
-            print(linha)
-
-            for palavra, dica in zip(palavras, dicas):
-                print(f"| {palavra:<{largura_palavra}} | {dica:<{largura_dica}} |")
-        print(linha)
-        print()
-
+    elif opcao == 3:
+        limpa_tela()
+        altera_dica()
+        limpa_tela()
+        
     elif opcao == 6:
         print("Desligando...")
         time.sleep(2)
