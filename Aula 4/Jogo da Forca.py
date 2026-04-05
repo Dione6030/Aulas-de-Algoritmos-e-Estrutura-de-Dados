@@ -78,6 +78,24 @@ def altera_dica():
 
     time.sleep(2)
 
+def exclui_palavra():
+    print("Menu de Exclusão de Palavra")
+    mostra_palavras()
+
+    try:
+        indice = int(input("Selecione o numero referente a palavra: "))-1
+
+        if 0 <= indice < len(palavras):
+            palavras.pop(indice)
+            dicas.pop(indice)
+            print("Palavra Removida com Sucesso! 📝")
+        else:
+            print("Número Inválido! 🙅‍♀️🙅‍♂️")
+    except:
+        print("Entrada Inválida! ❌")
+
+    time.sleep(2)
+
 print("Bem-vindo ao Jogo da Forca!")
 while True:
     print("1. Incluir palavra")
@@ -102,7 +120,12 @@ while True:
         limpa_tela()
         altera_dica()
         limpa_tela()
-        
+
+    elif opcao == 4:
+        limpa_tela()
+        exclui_palavra()
+        limpa_tela()
+
     elif opcao == 6:
         print("Desligando...")
         time.sleep(2)
