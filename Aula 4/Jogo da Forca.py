@@ -72,6 +72,9 @@ while True:
         limpa_tela()
     
     elif opcao == 2:
+        limpa_tela()
+        mostra_palavras()
+
         if not palavras:
             print("Não há palavras cadastradas.")
         else:
