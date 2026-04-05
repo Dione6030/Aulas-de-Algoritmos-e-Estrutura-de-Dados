@@ -32,6 +32,23 @@ def carrega_dados():
 
 carrega_dados()
 
+def mostra_palavras():
+    if not palavras:
+        print("Não há palavras cadastradas.")
+    else:
+        largura_palavra = max(len("Palavra"), max(len(p) for p in palavras))
+        largura_dica = max(len("Dica"), max(len(d) for d in dicas))
+
+        linha = f"+-+-{'-' * largura_palavra}-+-{'-' * largura_dica}--+"
+        print(linha)
+        print(f"| | {'Palavra':<{largura_palavra}} | {'Dica':<{largura_dica}} |")
+        print(linha)
+
+        for i, (palavra, dica) in enumerate(zip(palavras, dicas)):
+            print(f"|{i+1}| {palavra:<{largura_palavra}} | {dica:<{largura_dica}} |")
+    print(linha)
+    print()
+
 print("Bem-vindo ao Jogo da Forca!")
 while True:
     print("1. Incluir palavra")
