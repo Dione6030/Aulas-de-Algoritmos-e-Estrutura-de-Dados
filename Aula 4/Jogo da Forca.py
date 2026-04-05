@@ -32,9 +32,19 @@ def carrega_dados():
 
 carrega_dados()
 
+def adiciona_palavra():
+    print("Página de Inclusão")
+    palavra = input("Palavra: ").strip()
+    dica = input("Uma palavra de dica: ").strip()
+    palavras.append((palavra))
+    dicas.append((dica))
+    print("Palavra e Dica adicionadas.")
+    time.sleep(2)
+
 def mostra_palavras():
     if not palavras:
         print("Não há palavras cadastradas.")
+        time.sleep(2)
     else:
         largura_palavra = max(len("Palavra"), max(len(p) for p in palavras))
         largura_dica = max(len("Dica"), max(len(d) for d in dicas))
@@ -62,13 +72,7 @@ while True:
     
     if opcao == 1:
         limpa_tela()
-        print("Página de Inclusão")
-        palavra = input("Palavra: ").strip()
-        dica = input("Uma palavra de dica: ").strip()
-        palavras.append((palavra))
-        dicas.append((dica))
-        print("Palavra e Dica adicionadas.")
-        time.sleep(2)
+        adiciona_palavra()
         limpa_tela()
     
     elif opcao == 2:
