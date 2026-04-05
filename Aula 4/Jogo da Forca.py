@@ -96,13 +96,34 @@ def exclui_palavra():
 
     time.sleep(2)
 
+def ordena_palavras():
+    if not palavras:
+        print("Não há palavras cadastradas.")
+        time.sleep(2)
+        return
+    else:
+        palavrasOrdenadas = sorted(zip(palavras, dicas))
+
+        largura_palavra = max(len("Palavra"), max(len(p) for p in palavras))
+        largura_dica = max(len("Dica"), max(len(d) for d in dicas))
+
+        linha = f"+-+-{'-' * largura_palavra}-+-{'-' * largura_dica}--+"
+        print(linha)
+        print(f"| | {'Palavra':<{largura_palavra}} | {'Dica':<{largura_dica}} |")
+        print(linha)
+
+        for i, (palavra, dica) in enumerate(palavrasOrdenadas):
+            print(f"|{i+1}| {palavra:<{largura_palavra}} | {dica:<{largura_dica}} |")
+    print(linha)
+    print()
+
 print("Bem-vindo ao Jogo da Forca!")
 while True:
     print("1. Incluir palavra")
     print("2. Listar palavras")
     print("3. Alterar dica")
     print("4. Excluir palavra")
-    print("5. Listar palavras em ordem")
+    print("5. Listar palavras em ordem alfabetica")
     print("6. Finalizar")
     
     opcao = int(input("Escolha uma opção: ").strip())
@@ -125,6 +146,10 @@ while True:
         limpa_tela()
         exclui_palavra()
         limpa_tela()
+
+    elif opcao == 5:
+        limpa_tela()
+        ordena_palavras()
 
     elif opcao == 6:
         print("Desligando...")
