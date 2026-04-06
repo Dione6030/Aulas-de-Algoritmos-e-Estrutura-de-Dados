@@ -72,7 +72,7 @@ def mostra_palavra(palavra_oculta, letras_erradas):
     print("\n")
 
 def faz_aposta(palavra_oculta, letras_erradas, erros):
-    aposta = input("Digite uma letra ou a palavra completa: ").strip().lower()
+    aposta = input("Digite uma letra ou a palavra completa: ").strip().upper()
 
     if not aposta.isalpha():
         print("Aposta inválida! Digite apenas letras.")
