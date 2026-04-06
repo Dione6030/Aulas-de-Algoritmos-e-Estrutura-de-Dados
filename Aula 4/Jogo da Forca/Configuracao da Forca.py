@@ -34,8 +34,8 @@ carrega_dados()
 
 def adiciona_palavra():
     print("Página de Inclusão")
-    palavra = input("Palavra: ").strip()
-    dica = input("Uma palavra de dica: ").strip()
+    palavra = input("Palavra: ").strip().lower()
+    dica = input("Uma palavra de dica: ").strip().lower()
     palavras.append((palavra))
     dicas.append((dica))
     print("Palavra e Dica adicionadas.")
