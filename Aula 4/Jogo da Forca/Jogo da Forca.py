@@ -65,68 +65,66 @@ def palavra_aleatoria():
 palavra, dica = palavra_aleatoria()
 
 
-def mostra_palavra(palavra_oculta, letras_erradas, erros):
-    if erros >= 4:
-        print(f"Dica: {dica}")
+def mostra_palavra(palavra_oculta, letras_erradas):
     
     print("Palavra: ", " ".join(palavra_oculta))
     print("Letras Erradas: ", " ".join(letras_erradas))
     print("\n")
 
-def faz_aposta():
-    erros = 0
-    palavra_oculta = ["_" for _ in palavra]
-    letras_erradas = []
-    
-    while True:
-        limpa_tela()
-        desenha_forca(erros)
-        mostra_palavra(palavra_oculta, letras_erradas, erros)
-        
-        aposta = input("Digite uma letra ou a palavra completa: ").strip().lower()
-        
-        if not aposta.isalpha():
-            print("Aposta inválida! Digite apenas letras.")
-            time.sleep(2)
-            continue
-        try:
-            if aposta in palavra:
-                for i, letra in enumerate(palavra):
-                    if letra == aposta:
-                        palavra_oculta[i] = aposta
-                break
+def faz_aposta(palavra_oculta, letras_erradas, erros):
+    aposta = input("Digite uma letra ou a palavra completa: ").strip().lower()
+
+    if not aposta.isalpha():
+        print("Aposta inválida! Digite apenas letras.")
+        time.sleep(2)
+        return erros
+
+    if len(aposta) == 1:
+        if aposta in palavra:
+            for i, letra in enumerate(palavra):
+                if letra == aposta:
+                    palavra_oculta[i] = aposta
+
+        else:
+            if aposta not in letras_erradas:
+                letras_erradas.append(aposta)
+                erros += 1
             else:
-                if aposta not in letras_erradas:
-                    letras_erradas.append(aposta)
-                    erros += 1
-                    break
-                else:
-                    print("Está letra já foi, tente outra!")
-                    time.sleep(2)
-                    break
-        except IndexError:
-            print("Letra ou palavra invalida, Repita!")
-            time.sleep(2)
-    return erros, palavra_oculta, letras_erradas
+                print("Está letra já foi, tente outra!")
+                time.sleep(2)
+
+    else:
+        if aposta == palavra:
+            palavra_oculta[:] = list(palavra)
+        else:
+            erros += 1
+
+    return palavra_oculta, letras_erradas, erros
 
 def verifica_palavra(palavra_oculta):
     faltam = palavra_oculta.count("_")
     return faltam
 
-
-mostra_palavra()
+erros = 0
+palavra_oculta = ["_" for _ in palavra]
+letras_erradas = []
 
 ################################ Programa Principal ###############################
 while True:
-    aposta = faz_aposta()
-    
-    if aposta[1] in palavra:
-        print("Parabéns, você acertou alguma letra! 🥳")
-        contador = verifica_palavra(aposta[1])
-        time.sleep(2)
-        if contador == 0:
-            print("Parabéns! Você venceu! 🎉🎉")
-            break
-        else:
-            print(f"Faltam descobrir: {contador} letra(s)")
-        time.sleep(2)
+    limpa_tela()
+    desenha_forca(erros)
+    mostra_palavra(palavra_oculta, letras_erradas)
+    if erros >= 4:
+        print(f"Dica: {dica}")
+
+    palavra_oculta, letras_erradas, erros = faz_aposta(palavra_oculta, letras_erradas, erros)
+
+    if "_" not in palavra_oculta:
+        print("Você venceu! 🎉")
+        break
+
+    if erros >= 6:
+        limpa_tela()
+        desenha_forca(erros)
+        print(f"Você perdeu! A palavra era: {palavra}")
+        break
