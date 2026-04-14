@@ -64,14 +64,8 @@ def media_idosos():
     # 1. Nome   80 Anos
     
     media = 0
-    
-    nome = []
-    idade = []
-    
-    for quantidade, passageiro in enumerate(titanic):
-        nome.append(passageiro['Name'])
-        idade.append(passageiro['Age'])
         
+    for passageiro in titanic:
         if passageiro['Age'] != '':
             media += float(passageiro['Age'])
 
@@ -81,10 +75,10 @@ def media_idosos():
     print()
     print("Lista dos 10 Passageiros + Idosos")
     
-    ranking = sorted(zip(nome, idade), key=lambda x: float(x[1]) if x[1] != '' else -1, reverse=True)
+    ranking = sorted(titanic, key=lambda x: float(titanic['Age']) if titanic["Age"] != '' else 0, reverse=True)
     
     for i in range(10):
-        print(f"{i+1}. {(ranking[i][0]):40s}   {ranking[i][1]:2s} Anos")
+        print(f"{i+1}. {(ranking[i]['Name']):40s}   {ranking[i]['Age']:2s} Anos")
 
 def compara_classe():
     titulo("Comparação dos Passageiros Classe x Sobreviventes")
