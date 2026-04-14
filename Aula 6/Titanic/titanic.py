@@ -81,8 +81,10 @@ def media_idosos():
     print()
     print("Lista dos 10 Passageiros + Idosos")
     
+    ranking = sorted(zip(nome, idade), key=lambda x: float(x[1]) if x[1] != '' else -1, reverse=True)
+    
     for i in range(10):
-        print(f"{i+1}. {nome[i]}   {idade[i]} Anos")
+        print(f"{i+1}. {(ranking[i][0]):40s}   {ranking[i][1]:2s} Anos")
 
 def compara_classe():
     titulo("Comparação dos Passageiros Classe x Sobreviventes")
@@ -98,6 +100,45 @@ def compara_classe():
     # 3ª Classe: XX
     # Sobreviventes: XX
     # Mortos: XX
+    
+    classe1 = cls1_sobreviveu = cls1_morreu = 0
+    classe2 = cls2_sobreviveu = cls2_morreu = 0
+    classe3 = cls3_sobreviveu = cls3_morreu = 0
+    
+    for passageiro in titanic:
+        classe = passageiro['Pclass']
+        sobreviveu = passageiro['Survived']
+        
+        if classe == '1':
+            classe1 += 1
+            if sobreviveu == '1':
+                cls1_sobreviveu += 1
+            else:
+                cls1_morreu += 1
+        elif classe == '2':
+            classe2 += 1
+            if sobreviveu == '1':
+                cls2_sobreviveu += 1
+            else:
+                cls2_morreu += 1
+        else:
+            classe3 += 1
+            if sobreviveu == '1':
+                cls3_sobreviveu += 1
+            else:
+                cls3_morreu += 1
+    
+    print(f"1ª Classe: {classe1}")
+    print(f"Sobreviventes: {cls1_sobreviveu}")
+    print(f"Mortos: {cls1_morreu}")
+    print()
+    print(f"2ª Classe: {classe2}")
+    print(f"Sobreviventes: {cls2_sobreviveu}")
+    print(f"Mortos: {cls2_morreu}")
+    print()
+    print(f"3ª Classe: {classe3}")
+    print(f"Sobreviventes: {cls3_sobreviveu}")
+    print(f"Mortos: {cls3_morreu}")
 
 while True:
     titulo("Passageiros do Titanic", "=")
@@ -111,5 +152,7 @@ while True:
         compara_sexo()
     elif opcao == 2:
         media_idosos()
+    elif opcao == 3:
+        compara_classe()
     else:
         break
