@@ -7,64 +7,34 @@ from colorama import init, Fore
 init(autoreset=True)
 
 inimigo = "👾"
-obstaculo = "🌠"
+obstaculo = "☄️"
 personagem = "🚀"
 tiro = "⚡"
 morte = "💥"
 espaco = "✨"
 
-def carrega_placar():
-    ranking = []
-    try:
-        with open("placar_galaga.txt", "r", encoding="utf-8") as arq:
-            for linha in arq:
-                partes = linha.strip().split(" - ")
-                if len(partes) != 5:
-                    continue
-                try:
-                    jogador_nome = partes[0]
-                    jogador_level = int(partes[1].split(": ")[1])
-                    jogador_pontos = int(partes[2].split()[0])
-                    jogador_pg = float(partes[3].split()[0])
-                    jogador_duracao = float(partes[4].split()[0])
-                except (IndexError, ValueError):
-                    continue
-
-                ranking.append(
-                    (
-                        jogador_nome,
-                        jogador_level,
-                        jogador_pontos,
-                        jogador_duracao,
-                        jogador_pg,
-                    )
-                )
-    except FileNotFoundError:
-        print(Fore.RED + "Arquivo de placar não encontrado. Criando um novo arquivo.")
-    return ranking
-
-
-def ordena_placar():
-    return sorted(carrega_placar(), key=lambda x: x[2], reverse=True)
-
-
-def exibe_placar(ranking, titulo):
-    print(Fore.YELLOW + f"\n{titulo}:")
-    if not ranking:
-        print(Fore.CYAN + "Nenhum registro encontrado.")
-        return
-
-    for i, (jogador_nome, jogador_level, jogador_pontos, jogador_duracao, jogador_pg) in enumerate(ranking[:10], start=1):
-        print(
-            Fore.GREEN
-            + f"{i}. {jogador_nome} - Level: {jogador_level} - {jogador_pontos} pontos - {jogador_pg:.2f} - {jogador_duracao:.2f} segundos"
-        )
-
 
 print(Fore.RED + "==" + Fore.BLUE + "==" + Fore.GREEN + "==" + Fore.YELLOW + "==" + Fore.CYAN + "==" + Fore.MAGENTA + " JOGO DO GALAGA " + Fore.CYAN + "==" + Fore.YELLOW + "==" + Fore.GREEN + "==" + Fore.BLUE + "==" + Fore.RED + "==")
 mostrar_placar = input(Fore.YELLOW + "Deseja ver o placar? (S/N): ").lower()
 if mostrar_placar == "s":
-    exibe_placar(ordena_placar(), "Placar Atual")
+    if os.path.isfile("placar_galaga.txt"):
+        with open("placar_galaga.txt", "r") as arq:
+            dados = arq.readlines()
+            
+            if dados:
+                print()
+                print("="*43)
+                print(Fore.YELLOW + "------------< PLACAR DO GALAGA >------------")
+                print("="*43)
+                print(Fore.CYAN + "Nº Nome do Jogador.........: Pontos.: Level: Tempo.:")
+                
+                for posicao, linha in enumerate(dados, start=1):
+                    partes = linha.split(";")
+                    print(Fore.WHITE + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}     {int(partes[2]):2d}   {float(partes[3]):6.2f} seg")
+            else:
+                print(Fore.YELLOW + "Nenhum jogo registrado no placar.")
+    else:
+        print(Fore.YELLOW + "Placar não encontrado. Jogue para criar um novo placar!")
 
 nome = input(Fore.MAGENTA + "Nome do Jogador: ")
 
@@ -78,8 +48,6 @@ if tutorial == "s":
     print(Fore.GREEN + "5. Destrua os inimigos para ganhar pontos.")
     print(Fore.GREEN + "6. Obstáculos são indestrutíveis.")
     time.sleep(15)
-
-tempo_inicial = time.time()
 
 vidas = 3
 level = 1
@@ -177,6 +145,8 @@ def passa_turno(matriz, colunas_ativas, pos_jogador):
     matriz[linhas - 1][pos_jogador] = personagem
     return colidiu
 
+tempo_inicial = time.time()
+
 ################################ Programa Principal ###############################
 
 matriz, pos_jogador = cria_matriz()
@@ -206,16 +176,34 @@ mostra_matriz(matriz)
 print(Fore.RED + "\nGame Over! Você perdeu todas as vidas.")
 
 tempo_final = time.time()
-duracao = tempo_final - tempo_inicial
+duracao = int(tempo_final - tempo_inicial)
 
 print(Fore.CYAN + f"Tempo de Jogo: {duracao:.2f} segundos")
 print(Fore.GREEN + f"Pontuação Final: {pontuacao} pontos")
 
-pontuacao_geral = pontuacao / level
+dados = []
+if os.path.isfile("placar_galaga.txt"):
+    with open("placar_galaga.txt", "r") as arq:
+        dados = arq.readlines()
 
-def salva_placar(nome, level, pontuacao, duracao, pontuacao_geral):
-    with open("placar_galaga.txt", "a", encoding="utf-8") as f:
-        f.write(f"{nome} - Level: {level} - {pontuacao} pontos - {pontuacao_geral:.2f} - {duracao:.2f} segundos\n")
-salva_placar(nome, level, pontuacao, duracao, pontuacao_geral)
+dados.append(f"{nome};{pontuacao};{level};{duracao:.2f}\n")
 
-exibe_placar(ordena_placar(), "Placar Geral")
+with open("placar_galaga.txt", "a+") as arq:
+    arq.write(f"{nome};{pontuacao};{level};{duracao:.2f}\n")
+
+ranking = sorted(dados, key=lambda x: (int(x.split(';')[1]), int(x.split(';')[2]), float(x.split(';')[3]) * -1), reverse=True)
+
+print()
+print("="*43)
+print(Fore.YELLOW + "------------< PLACAR DO GALAGA >------------")
+print("="*43)
+print(Fore.CYAN + "Nº Nome do Jogador.........: Pontos.: Level: Tempo.:")
+
+posicao = 0
+for posicao, linha in enumerate(ranking, start=1):
+    partes = linha.split(";")
+    
+    if partes[0] == nome and int(partes[1]) == pontuacao and int(partes[2]) == level and float(partes[3]) == duracao:
+        print(Fore.RED + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}   {int(partes[2]):2d}   {float(partes[3]):6.2f} seg")
+    else:
+        print(Fore.WHITE + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}   {int(partes[2]):2d}   {float(partes[3]):6.2f} seg")
