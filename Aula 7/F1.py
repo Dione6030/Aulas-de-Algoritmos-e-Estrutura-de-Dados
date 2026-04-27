@@ -15,6 +15,7 @@ def titulo(text, traco="-"):
 def top_pilotos():
     titulo("Top 10 Pilotos com Mais Vitórias")
     grupos = {}
+    vitorias = {}
     
     print("1. Melhores dos anos 50 a 70")
     print("2. Melhores dos anos 80 a 90")
@@ -25,40 +26,39 @@ def top_pilotos():
     
     opcao = input("Opção: ")
     
+    intervalo = {
+        "1": (1950, 1979),
+        "2": (1980, 1989),
+        "3": (1990, 1999),
+        "4": (2000, 2009),
+        "5": (2010, 2019),
+        "6": (2020, 2024)
+    }
+    
+    if opcao not in intervalo:
+        print("Opção inválida!")
+        return
+    
+    ano_inicio, ano_fim = intervalo[opcao]
+    
     for corrida in F1:
         ano = int(corrida['Date'][:4])
         piloto = corrida['Winner']
         trofeis = corrida['Grand Prix']
         
-        if opcao == "1" and 1950 <= ano <= 1979:
-            if piloto not in grupos:
-                grupos[piloto] = 0
-            grupos[piloto] += 1
-        elif opcao == "2" and 1980 <= ano <= 1989:
-            if piloto not in grupos:
-                grupos[piloto] = 0
-            grupos[piloto] += 1
-        elif opcao == "3" and 1990 <= ano <= 1999:
-            if piloto not in grupos:
-                grupos[piloto] = 0
-            grupos[piloto] += 1
-        elif opcao == "4" and 2000 <= ano <= 2009:
-            if piloto not in grupos:
-                grupos[piloto] = 0
-            grupos[piloto] += 1
-        elif opcao == "5" and 2010 <= ano <= 2019:
-            if piloto not in grupos:
-                grupos[piloto] = 0
-            grupos[piloto] += 1
-        elif opcao == "6" and 2020 <= ano <= 2024:
-            if piloto not in grupos:
-                grupos[piloto] = 0
-            grupos[piloto] += 1
-    
+        if ano_inicio <= ano <= ano_fim:
+            grupos[piloto] = grupos.get(piloto, 0) + 1
+            
+            if piloto not in vitorias:
+                vitorias[piloto] = {}
+            vitorias[piloto][trofeis] = vitorias[piloto].get(trofeis, 0) + 1
+        
     grupos2 = sorted(grupos.items(), key=lambda x: x[1], reverse=True)
     print("\nNº Piloto.............: Vitórias: Top 3 Troféus:")
     for piloto, vitórias in grupos2[:10]:
-        print(f"{piloto:25s}   {vitórias:2d}   {trofeis[:3]}")
+        top3 = sorted(vitorias[piloto].items(), key=lambda x: x[1], reverse=True)
+        top3_str = ", ".join([f"{trofeis}({qtd})" for trofeis, qtd in top3[:3]])
+        print(f"{piloto:25s}   {vitórias:2d}   {top3_str}")
 
 while True:
     titulo("Menu Principal")
