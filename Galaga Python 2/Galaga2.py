@@ -62,5 +62,5 @@ if tutorial == "s":
 def cria_matriz():
     return [[espaco for _ in range(colunas)] for _ in range(linhas)]
 
-def mostra_matriz():
-    
+hud = (f"Jogador: {nome} | Vidas: {'❤️' * max(vidas, 0)} | Pontos: {pontuacao} | Level: {level}")
+
