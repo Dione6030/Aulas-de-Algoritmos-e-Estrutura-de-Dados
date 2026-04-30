@@ -64,3 +64,10 @@ def cria_matriz():
 
 hud = (f"Jogador: {nome} | Vidas: {'❤️' * max(vidas, 0)} | Pontos: {pontuacao} | Level: {level}")
 
+def cria_frame(matriz, jogador_col, tiros):
+    frame = [linha[:] for linha in matriz]
+    frame[linhas - 1][jogador_col] = personagem
+    for (tiro_linha, tiro_col) in tiros:
+        if 0 <= tiro_linha < linhas and 0 <= tiro_col < colunas:
+            frame[tiro_linha][tiro_col] = tiro
+
