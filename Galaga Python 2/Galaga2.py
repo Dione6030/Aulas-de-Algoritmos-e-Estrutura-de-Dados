@@ -22,7 +22,7 @@ linhas = 15
 colunas = 10
 
 tiros = []
-personagem_pos_inicial = colunas // 2
+jogador_col = colunas // 2
 
 print(Fore.RED + "==" + Fore.BLUE + "==" + Fore.GREEN + "==" + Fore.YELLOW + "==" + Fore.CYAN + "==" + Fore.MAGENTA + " JOGO DO GALAGA " + Fore.CYAN + "==" + Fore.YELLOW + "==" + Fore.GREEN + "==" + Fore.BLUE + "==" + Fore.RED + "==")
 mostrar_placar = input(Fore.YELLOW + "Deseja ver o placar? (S/N): ").lower()
