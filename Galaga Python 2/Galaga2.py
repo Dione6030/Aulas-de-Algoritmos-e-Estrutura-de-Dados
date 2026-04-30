@@ -71,3 +71,9 @@ def cria_frame(matriz, jogador_col, tiros):
         if 0 <= tiro_linha < linhas and 0 <= tiro_col < colunas:
             frame[tiro_linha][tiro_col] = tiro
 
+def garante_linhas_colunas(frame, stdscr):
+    Y0 = 2
+    CELL_W = 2
+    for num, linha in enumerate(frame):
+        branco = "".join(ch + " "*(CELL_W-1) for ch in linha)
+        stdscr.addstr(Y0 + num, 0, branco)
