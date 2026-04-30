@@ -92,3 +92,8 @@ def escolhe_inimigo_obstaculo(linha):
             linha[num] = inimigo
         elif aleatorio < 0.45:
             linha[num] = obstaculo
+
+def gera_desafio():
+    linha = [espaco for _ in range(colunas)]
+    escolhe_inimigo_obstaculo(linha)
+    return linha
