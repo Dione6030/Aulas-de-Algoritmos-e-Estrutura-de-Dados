@@ -84,3 +84,11 @@ def mostra_matriz(stdscr, matriz, jogador_col, hud, tiros):
     frame = cria_frame(matriz, jogador_col, tiros)
     garante_linhas_colunas(frame, stdscr)
     stdscr.refresh()
+
+def escolhe_inimigo_obstaculo(linha):
+    for num in range(colunas):
+        aleatorio = random.random()
+        if aleatorio < 0.35:
+            linha[num] = inimigo
+        elif aleatorio < 0.45:
+            linha[num] = obstaculo
