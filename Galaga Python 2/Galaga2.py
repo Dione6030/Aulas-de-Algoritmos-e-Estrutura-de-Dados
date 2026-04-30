@@ -97,3 +97,10 @@ def gera_desafio():
     linha = [espaco for _ in range(colunas)]
     escolhe_inimigo_obstaculo(linha)
     return linha
+
+def main(stdscr):
+    global vidas, level, pontuacao, jogador_col, tiros
+    
+    matriz = cria_matriz()
+    mostra_matriz(stdscr, matriz, jogador_col, hud, tiros)
+    
