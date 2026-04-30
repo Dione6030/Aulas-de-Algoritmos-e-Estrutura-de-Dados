@@ -77,3 +77,10 @@ def garante_linhas_colunas(frame, stdscr):
     for num, linha in enumerate(frame):
         branco = "".join(ch + " "*(CELL_W-1) for ch in linha)
         stdscr.addstr(Y0 + num, 0, branco)
+
+def mostra_matriz(stdscr, matriz, jogador_col, hud, tiros):
+    stdscr.clear()
+    stdscr.addstr(0, 0, hud)
+    frame = cria_frame(matriz, jogador_col, tiros)
+    garante_linhas_colunas(frame, stdscr)
+    stdscr.refresh()
