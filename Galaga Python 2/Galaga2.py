@@ -103,5 +103,6 @@ def main(stdscr):
     global vidas, level, pontuacao, jogador_col, tiros
     
     matriz = cria_matriz()
-    mostra_matriz(stdscr, matriz, jogador_col, hud, tiros)
-    
+
+if __name__ == "__main__":
+    curses.wrapper(main)
