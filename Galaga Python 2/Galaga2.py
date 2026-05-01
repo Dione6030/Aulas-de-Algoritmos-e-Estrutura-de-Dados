@@ -103,6 +103,16 @@ def main(stdscr):
     global vidas, level, pontuacao, jogador_col, tiros
     
     matriz = cria_matriz()
+    
+    while vidas > 0:
+        hud = (f"Jogador: {nome} | Vidas: {'❤️' * max(vidas, 0)} | Pontos: {pontuacao} | Level: {level}")
+        mostra_matriz(stdscr, matriz, jogador_col, hud, tiros)
+        
+        key = stdscr.getch()
+        if key in [ord('a'), ord('A')]:
+            jogador_col = max(0, jogador_col -1)
+        elif key in [ord('d'), ord('D')]:
+            jogador_col = min(colunas - 1, jogador_col + 1)
 
 if __name__ == "__main__":
     curses.wrapper(main)
