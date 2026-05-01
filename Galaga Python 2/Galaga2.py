@@ -70,6 +70,7 @@ def cria_frame(matriz, jogador_col, tiros):
     for (tiro_linha, tiro_col) in tiros:
         if 0 <= tiro_linha < linhas and 0 <= tiro_col < colunas:
             frame[tiro_linha][tiro_col] = tiro
+    return frame
 
 def garante_linhas_colunas(frame, stdscr):
     Y0 = 2
