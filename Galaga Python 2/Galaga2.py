@@ -62,8 +62,6 @@ if tutorial == "s":
 def cria_matriz():
     return [[espaco for _ in range(colunas)] for _ in range(linhas)]
 
-hud = (f"Jogador: {nome} | Vidas: {'❤️' * max(vidas, 0)} | Pontos: {pontuacao} | Level: {level}")
-
 def cria_frame(matriz, jogador_col, tiros):
     frame = [linha[:] for linha in matriz]
     frame[linhas - 1][jogador_col] = personagem
@@ -101,7 +99,7 @@ def gera_desafio():
 
 def main(stdscr):
     global vidas, level, pontuacao, jogador_col, tiros
-    
+    stdscr.timeout(33)
     matriz = cria_matriz()
     
     while vidas > 0:
