@@ -121,8 +121,33 @@ def rola_matriz(matriz, jogador_col):
     
     coloca_jogador(matriz, jogador_col)
 
+def acerto(linha, col, matriz, duracao=0.25):
+    global explosoes
+    matriz[linha][col] = morte
+    explosoes[(linha, col)] = time.monotonic() + duracao
+    return 10
+
 def disparar(tiros, jogador_col):
     tiros.append((linhas - 2, jogador_col))
+
+def processa_tiros(matriz, tiros):
+    global pontuacao
+    novos_tiros = []
+    
+    for (tiro_linha, tiro_col) in tiros:
+        distancia = tiro_linha - 1
+        if distancia < 0:
+            continue
+        
+        celula = matriz[distancia][tiro_col]
+        if celula == inimigo:
+            pontuacao += acerto(distancia, tiro_col, matriz)
+        elif celula == obstaculo:
+            continue
+        else: 
+            novos_tiros.append((distancia, tiro_col))
+    tiros[:] = novos_tiros
+
 def main(stdscr):
     global vidas, level, pontuacao, jogador_col, tiros, sprite_jogador
     stdscr.timeout(33)
@@ -154,6 +179,7 @@ def main(stdscr):
         elif key in [ord('s'), ord('S')]:
             disparar(tiros, jogador_col)
 
+        processa_tiros(matriz, tiros)
         if acumula_tempo_queda >= intervalo_queda:
             acumula_tempo_queda -= intervalo_queda
             rola_matriz(matriz, jogador_col)
