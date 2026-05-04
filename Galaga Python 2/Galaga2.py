@@ -1,7 +1,6 @@
 import random
 import time
 import os
-import subprocess
 import curses
 from colorama import init, Fore
 
@@ -111,6 +110,16 @@ def coloca_desafio(matriz):
     nova_linha = gera_desafio()
     for num in range(colunas):
         matriz[0][num] = nova_linha[num]
+
+def rola_matriz(matriz, jogador_col):
+    tira_jogador(matriz, jogador_col)
+    
+    for i in range(linhas - 2, 0, -1):
+        for j in range(colunas):
+            matriz[i][j] = matriz[i - 1][j]
+    coloca_desafio(matriz)
+    
+    coloca_jogador(matriz, jogador_col)
 
 def main(stdscr):
     global vidas, level, pontuacao, jogador_col, tiros, sprite_jogador
