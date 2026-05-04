@@ -13,6 +13,7 @@ personagem = "🚀"
 tiro = "⚡"
 morte = "💥"
 espaco = "✨"
+sprite_jogador = personagem
 
 vidas = 3
 level = 1
@@ -64,7 +65,7 @@ def cria_matriz():
 
 def cria_frame(matriz, jogador_col, tiros):
     frame = [linha[:] for linha in matriz]
-    frame[linhas - 1][jogador_col] = personagem
+    frame[linhas - 1][jogador_col] = sprite_jogador
     for (tiro_linha, tiro_col) in tiros:
         if 0 <= tiro_linha < linhas and 0 <= tiro_col < colunas:
             frame[tiro_linha][tiro_col] = tiro
@@ -98,7 +99,7 @@ def gera_desafio():
     return linha
 
 def main(stdscr):
-    global vidas, level, pontuacao, jogador_col, tiros
+    global vidas, level, pontuacao, jogador_col, tiros, sprite_jogador
     stdscr.timeout(33)
     matriz = cria_matriz()
     
