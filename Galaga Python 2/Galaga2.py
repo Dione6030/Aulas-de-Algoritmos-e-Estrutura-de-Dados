@@ -193,7 +193,7 @@ def main(stdscr):
         
         sprite_jogador = morte if now < tempo_explosao else personagem
         
-        hud = (f"Jogador: {nome} | Vidas: {'❤️' * max(vidas, 0)} | Pontos: {pontuacao} | Level: {level}")
+        hud = (f"Jogador: {nome} | Vidas: {'❤️' * max(vidas, 0)} | Pontos: {pontuacao}")
         mostra_matriz(stdscr, matriz, jogador_col, hud, tiros)
         
         key = stdscr.getch()
@@ -251,7 +251,7 @@ posicao = 0
 for posicao, linha in enumerate(ranking, start=1):
     partes = linha.split(";")
     
-    if partes[0] == nome and int(partes[1]) == pontuacao and int(partes[2]) == duracao:
+    if partes[0] == nome and int(partes[1]) == pontuacao and float(partes[2]) == duracao:
         print(Fore.RED + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}   {float(partes[2]):6.2f} seg")
     else:
         print(Fore.WHITE + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}   {float(partes[2]):6.2f} seg")
