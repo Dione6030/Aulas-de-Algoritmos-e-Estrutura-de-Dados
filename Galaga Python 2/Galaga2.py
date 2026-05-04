@@ -101,6 +101,12 @@ def gera_desafio():
 def colisao(matriz, jogador_col):
     return matriz[linhas - 2][jogador_col] in (inimigo, obstaculo)
 
+
+def coloca_desafio(matriz):
+    nova_linha = gera_desafio()
+    for num in range(colunas):
+        matriz[0][num] = nova_linha[num]
+
 def main(stdscr):
     global vidas, level, pontuacao, jogador_col, tiros, sprite_jogador
     stdscr.timeout(33)
