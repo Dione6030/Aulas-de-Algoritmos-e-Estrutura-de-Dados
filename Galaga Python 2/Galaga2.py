@@ -122,7 +122,7 @@ def coloca_desafio(matriz):
     for num in range(colunas):
         matriz[0][num] = nova_linha[num]
 
-def rola_matriz(matriz, jogador_col):
+def rola_matriz(matriz):
 
     for i in range(linhas - 2, 0, -1):
         for j in range(colunas):
