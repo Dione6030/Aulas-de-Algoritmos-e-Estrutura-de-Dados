@@ -22,6 +22,7 @@ linhas = 15
 colunas = 10
 
 tiros = []
+explosoes = {}
 jogador_col = colunas // 2
 
 print(Fore.RED + "==" + Fore.BLUE + "==" + Fore.GREEN + "==" + Fore.YELLOW + "==" + Fore.CYAN + "==" + Fore.MAGENTA + " JOGO DO GALAGA " + Fore.CYAN + "==" + Fore.YELLOW + "==" + Fore.GREEN + "==" + Fore.BLUE + "==" + Fore.RED + "==")
@@ -127,6 +128,14 @@ def acerto(linha, col, matriz, duracao=0.25):
     explosoes[(linha, col)] = time.monotonic() + duracao
     return 10
 
+def atualiza_explosoes(matriz):
+    now = time.monotonic()
+    acabou = [pos for pos, fim in explosoes.items() if now >= fim]
+    for (l, c) in acabou:
+        if matriz[l][c] == morte:
+            matriz[l][c] = espaco
+        del explosoes[(l, c)]
+
 def disparar(tiros, jogador_col):
     tiros.append((linhas - 2, jogador_col))
 
@@ -180,6 +189,8 @@ def main(stdscr):
             disparar(tiros, jogador_col)
 
         processa_tiros(matriz, tiros)
+        atualiza_explosoes(matriz)
+
         if acumula_tempo_queda >= intervalo_queda:
             acumula_tempo_queda -= intervalo_queda
             rola_matriz(matriz, jogador_col)
