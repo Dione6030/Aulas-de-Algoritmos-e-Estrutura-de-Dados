@@ -6,13 +6,23 @@ from colorama import init, Fore
 
 init(autoreset=True)
 
-inimigo = "👾"
-obstaculo = "☄️"
-personagem = "🚀"
-tiro = "⚡"
-morte = "💥"
-espaco = "✨"
-sprite_jogador = personagem
+# Apenas use emojis se for no linux, windows não tem suporte completo a emojis com curses no terminal
+USE_EMOJI = False
+
+if USE_EMOJI:
+    inimigo = "👾"
+    obstaculo = "☄️"
+    personagem = "🚀"
+    tiro = "⚡"
+    morte = "💥"
+    espaco = "✨"
+else:
+    inimigo = "M"
+    obstaculo = "#"
+    personagem = "A"
+    tiro = "|"
+    morte = "X"
+    espaco = "."
 
 vidas = 3
 level = 1
@@ -73,10 +83,15 @@ def cria_frame(matriz, jogador_col, tiros):
 
 def garante_linhas_colunas(frame, stdscr):
     Y0 = 2
-    CELL_W = 2
+    max_colunas, max_linhas = stdscr.getmaxyx()
+    
     for num, linha in enumerate(frame):
-        branco = "".join(ch + " "*(CELL_W-1) for ch in linha)
-        stdscr.addstr(Y0 + num, 0, branco)
+        y = Y0 + num
+        if y >= max_colunas:
+            break
+        row = "".join(linha) if USE_EMOJI else " ".join(linha)
+        stdscr.addstr(y, 0, row[: max_linhas - 1])
+
 
 def mostra_matriz(stdscr, matriz, jogador_col, hud, tiros):
     stdscr.clear()
@@ -168,6 +183,11 @@ def main(stdscr):
     intervalo_queda = 0.5
     acumula_tempo_queda = 0.0
     ultimo = time.monotonic()
+    
+    try:
+        curses.curs_set(0)
+    except Exception:
+        pass
     
     while vidas > 0:
         now = time.monotonic()
