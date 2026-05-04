@@ -103,7 +103,16 @@ def main(stdscr):
     stdscr.timeout(33)
     matriz = cria_matriz()
     
+    intervalo_queda = 0.5
+    acumula_tempo_queda = 0.0
+    ultimo = time.monotonic()
+    
     while vidas > 0:
+        now = time.monotonic()
+        dt = now - ultimo
+        ultimo = now
+        acumula_tempo_queda += dt
+        
         hud = (f"Jogador: {nome} | Vidas: {'❤️' * max(vidas, 0)} | Pontos: {pontuacao} | Level: {level}")
         mostra_matriz(stdscr, matriz, jogador_col, hud, tiros)
         
@@ -113,5 +122,9 @@ def main(stdscr):
         elif key in [ord('d'), ord('D')]:
             jogador_col = min(colunas - 1, jogador_col + 1)
 
+        if acumula_tempo_queda >= intervalo_queda:
+            acumula_tempo_queda -= intervalo_queda
+            rola_matriz(matriz, jogador_col)
+            
 if __name__ == "__main__":
     curses.wrapper(main)
