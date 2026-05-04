@@ -29,7 +29,7 @@ level = 1
 pontuacao = 0
 
 linhas = 15
-colunas = 10
+colunas = 20
 
 tiros = []
 explosoes = {}
@@ -62,10 +62,10 @@ nome = input(Fore.MAGENTA + "Nome do Jogador: ")
 tutorial = input(Fore.YELLOW + "Deseja ver o tutorial? (S/N): ").lower()
 if tutorial == "s":
     print(Fore.CYAN + "\nTutorial:")
-    print(Fore.GREEN + "1. Use as teclas A e D para mover o foguete (🚀) para a esquerda ou direita.")
+    print(Fore.GREEN + "1. Use as teclas A e D para mover o foguete (🚀/A) para a esquerda ou direita.")
     print(Fore.GREEN + "2. Use a tecla S para atirar.")
     print(Fore.GREEN + "3. Use a tecla Enter para continuar ou pular turno.")
-    print(Fore.GREEN + "4. Evite colidir com os inimigos (👾) e obstáculos (🌠).")
+    print(Fore.GREEN + "4. Evite colidir com os inimigos (👾/M) e obstáculos (🌠/#).")
     print(Fore.GREEN + "5. Destrua os inimigos para ganhar pontos.")
     print(Fore.GREEN + "6. Obstáculos são indestrutíveis.")
     time.sleep(15)
@@ -95,7 +95,9 @@ def garante_linhas_colunas(frame, stdscr):
 
 def mostra_matriz(stdscr, matriz, jogador_col, hud, tiros):
     stdscr.clear()
-    stdscr.addstr(0, 0, hud)
+    max_colunas, max_linhas = stdscr.getmaxyx()
+    stdscr.addstr(0, 0, hud[: max_linhas - 1])
+    
     frame = cria_frame(matriz, jogador_col, tiros)
     garante_linhas_colunas(frame, stdscr)
     stdscr.refresh()
@@ -116,26 +118,20 @@ def gera_desafio():
 def colisao(matriz, jogador_col):
     return matriz[linhas - 2][jogador_col] in (inimigo, obstaculo)
 
-def tira_jogador(matriz, jogador_col):
-    matriz[linhas - 1][jogador_col] = espaco
-
-def coloca_jogador(matriz, jogador_col):
-    matriz[linhas - 1][jogador_col] = sprite_jogador
-
 def coloca_desafio(matriz):
     nova_linha = gera_desafio()
     for num in range(colunas):
         matriz[0][num] = nova_linha[num]
 
 def rola_matriz(matriz, jogador_col):
-    tira_jogador(matriz, jogador_col)
-    
+
     for i in range(linhas - 2, 0, -1):
         for j in range(colunas):
             matriz[i][j] = matriz[i - 1][j]
     coloca_desafio(matriz)
     
-    coloca_jogador(matriz, jogador_col)
+    for i in range(colunas):
+        matriz[linhas -1][i] = espaco
 
 def acerto(linha, col, matriz, duracao=0.25):
     global explosoes
