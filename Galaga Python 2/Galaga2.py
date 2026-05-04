@@ -168,6 +168,7 @@ def processa_tiros(matriz, tiros):
             novos_tiros.append((distancia, tiro_col))
     tiros[:] = novos_tiros
 
+tempo_inicial = time.time()
 def main(stdscr):
     global vidas, level, pontuacao, jogador_col, tiros, sprite_jogador
     stdscr.timeout(33)
@@ -218,3 +219,38 @@ def main(stdscr):
 
 if __name__ == "__main__":
     curses.wrapper(main)
+
+print(Fore.RED + "\nGame Over! Você perdeu todas as vidas.")
+
+tempo_final = time.time()
+duracao = int(tempo_final - tempo_inicial)
+
+print(Fore.CYAN + f"Tempo de Jogo: {duracao:.2f} segundos")
+print(Fore.GREEN + f"Pontuação Final: {pontuacao} pontos")
+
+dados = []
+if os.path.isfile("placar_galaga.txt"):
+    with open("placar_galaga.txt", "r") as arq:
+        dados = arq.readlines()
+
+dados.append(f"{nome};{pontuacao};{level};{duracao:.2f}\n")
+
+with open("placar_galaga.txt", "a+") as arq:
+    arq.write(f"{nome};{pontuacao};{level};{duracao:.2f}\n")
+
+ranking = sorted(dados, key=lambda x: (int(x.split(';')[1]), int(x.split(';')[2]), float(x.split(';')[3]) * -1), reverse=True)
+
+print()
+print("="*43)
+print(Fore.YELLOW + "------------< PLACAR DO GALAGA >------------")
+print("="*43)
+print(Fore.CYAN + "Nº Nome do Jogador.........: Pontos.: Level: Tempo.:")
+
+posicao = 0
+for posicao, linha in enumerate(ranking, start=1):
+    partes = linha.split(";")
+    
+    if partes[0] == nome and int(partes[1]) == pontuacao and int(partes[2]) == level and float(partes[3]) == duracao:
+        print(Fore.RED + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}   {int(partes[2]):2d}   {float(partes[3]):6.2f} seg")
+    else:
+        print(Fore.WHITE + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}   {int(partes[2]):2d}   {float(partes[3]):6.2f} seg")
