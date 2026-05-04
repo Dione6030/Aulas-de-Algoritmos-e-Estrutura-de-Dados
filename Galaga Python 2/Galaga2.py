@@ -25,7 +25,6 @@ else:
     espaco = "."
 
 vidas = 3
-level = 1
 pontuacao = 0
 
 linhas = 15
@@ -47,11 +46,11 @@ if mostrar_placar == "s":
                 print("="*43)
                 print(Fore.YELLOW + "------------< PLACAR DO GALAGA >------------")
                 print("="*43)
-                print(Fore.CYAN + "Nº Nome do Jogador.........: Pontos.: Level: Tempo.:")
+                print(Fore.CYAN + "Nº Nome do Jogador.........: Pontos.: Tempo.:")
                 
                 for posicao, linha in enumerate(dados, start=1):
                     partes = linha.split(";")
-                    print(Fore.WHITE + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}     {int(partes[2]):2d}   {float(partes[3]):6.2f} seg")
+                    print(Fore.WHITE + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}   {float(partes[2]):6.2f} seg")
             else:
                 print(Fore.YELLOW + "Nenhum jogo registrado no placar.")
     else:
@@ -216,6 +215,8 @@ def main(stdscr):
                 vidas -= 1
                 tempo_explosao = now + 0.5
                 tempo_invulneravel = tempo_explosao
+        
+        
 
 if __name__ == "__main__":
     curses.wrapper(main)
@@ -233,24 +234,24 @@ if os.path.isfile("placar_galaga.txt"):
     with open("placar_galaga.txt", "r") as arq:
         dados = arq.readlines()
 
-dados.append(f"{nome};{pontuacao};{level};{duracao:.2f}\n")
+dados.append(f"{nome};{pontuacao};{duracao:.2f}\n")
 
 with open("placar_galaga.txt", "a+") as arq:
-    arq.write(f"{nome};{pontuacao};{level};{duracao:.2f}\n")
+    arq.write(f"{nome};{pontuacao};{duracao:.2f}\n")
 
-ranking = sorted(dados, key=lambda x: (int(x.split(';')[1]), int(x.split(';')[2]), float(x.split(';')[3]) * -1), reverse=True)
+ranking = sorted(dados, key=lambda x: (int(x.split(';')[1]), float(x.split(';')[2]) * -1), reverse=True)
 
 print()
 print("="*43)
 print(Fore.YELLOW + "------------< PLACAR DO GALAGA >------------")
 print("="*43)
-print(Fore.CYAN + "Nº Nome do Jogador.........: Pontos.: Level: Tempo.:")
+print(Fore.CYAN + "Nº Nome do Jogador.........: Pontos.: Tempo.:")
 
 posicao = 0
 for posicao, linha in enumerate(ranking, start=1):
     partes = linha.split(";")
     
-    if partes[0] == nome and int(partes[1]) == pontuacao and int(partes[2]) == level and float(partes[3]) == duracao:
-        print(Fore.RED + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}   {int(partes[2]):2d}   {float(partes[3]):6.2f} seg")
+    if partes[0] == nome and int(partes[1]) == pontuacao and int(partes[2]) == duracao:
+        print(Fore.RED + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}   {float(partes[2]):6.2f} seg")
     else:
-        print(Fore.WHITE + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}   {int(partes[2]):2d}   {float(partes[3]):6.2f} seg")
+        print(Fore.WHITE + f"{posicao:2d} {partes[0]:25s}   {int(partes[1]):2d}   {float(partes[2]):6.2f} seg")
