@@ -101,6 +101,11 @@ def gera_desafio():
 def colisao(matriz, jogador_col):
     return matriz[linhas - 2][jogador_col] in (inimigo, obstaculo)
 
+def tira_jogador(matriz, jogador_col):
+    matriz[linhas - 1][jogador_col] = espaco
+
+def coloca_jogador(matriz, jogador_col):
+    matriz[linhas - 1][jogador_col] = sprite_jogador
 
 def coloca_desafio(matriz):
     nova_linha = gera_desafio()
