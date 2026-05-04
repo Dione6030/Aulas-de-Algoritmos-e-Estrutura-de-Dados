@@ -121,6 +121,8 @@ def rola_matriz(matriz, jogador_col):
     
     coloca_jogador(matriz, jogador_col)
 
+def disparar(tiros, jogador_col):
+    tiros.append((linhas - 2, jogador_col))
 def main(stdscr):
     global vidas, level, pontuacao, jogador_col, tiros, sprite_jogador
     stdscr.timeout(33)
@@ -149,6 +151,8 @@ def main(stdscr):
             jogador_col = max(0, jogador_col -1)
         elif key in [ord('d'), ord('D')]:
             jogador_col = min(colunas - 1, jogador_col + 1)
+        elif key in [ord('s'), ord('S')]:
+            disparar(tiros, jogador_col)
 
         if acumula_tempo_queda >= intervalo_queda:
             acumula_tempo_queda -= intervalo_queda
