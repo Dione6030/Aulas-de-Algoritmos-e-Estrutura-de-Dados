@@ -98,10 +98,16 @@ def gera_desafio():
     escolhe_inimigo_obstaculo(linha)
     return linha
 
+def colisao(matriz, jogador_col):
+    return matriz[linhas - 2][jogador_col] in (inimigo, obstaculo)
+
 def main(stdscr):
     global vidas, level, pontuacao, jogador_col, tiros, sprite_jogador
     stdscr.timeout(33)
     matriz = cria_matriz()
+    
+    tempo_explosao = 0.0
+    tempo_invulneravel = 0.0
     
     intervalo_queda = 0.5
     acumula_tempo_queda = 0.0
@@ -112,6 +118,8 @@ def main(stdscr):
         dt = now - ultimo
         ultimo = now
         acumula_tempo_queda += dt
+        
+        sprite_jogador = morte if now < tempo_explosao else personagem
         
         hud = (f"Jogador: {nome} | Vidas: {'❤️' * max(vidas, 0)} | Pontos: {pontuacao} | Level: {level}")
         mostra_matriz(stdscr, matriz, jogador_col, hud, tiros)
@@ -126,5 +134,10 @@ def main(stdscr):
             acumula_tempo_queda -= intervalo_queda
             rola_matriz(matriz, jogador_col)
             
+            if colisao(matriz, jogador_col) and now >= tempo_invulneravel:
+                vidas -= 1
+                tempo_explosao = now + 0.5
+                tempo_invulneravel = tempo_explosao
+
 if __name__ == "__main__":
     curses.wrapper(main)
