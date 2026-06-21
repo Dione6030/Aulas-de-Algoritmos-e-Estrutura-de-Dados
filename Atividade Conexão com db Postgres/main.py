@@ -18,6 +18,9 @@ conexao.commit()
 
 from operacoes.incluiraposta import incluiraposta
 from operacoes.listar import listar
+from operacoes.alterar import alterar
+from operacoes.excluir import excluir
+from operacoes.simulacao import simulacao
 
 console = Console()
 
@@ -41,6 +44,12 @@ while True:
         incluiraposta()
     elif opcao == 2:
         listar()
+    elif opcao == 3:
+        alterar()
+    elif opcao == 4:
+        excluir()
+    elif opcao == 5:
+        simulacao()
     elif opcao == 6:
         console.print("[bold cyan]Fim do Programa[/bold cyan]")
         break

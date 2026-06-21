@@ -22,9 +22,34 @@ def alterar():
     
     for aposta in apostas:
         tabela.add_row(
-            aposta[0], 
+            str(aposta[0]), 
             aposta[1], 
             aposta[2],
             f"R$ {aposta[3]:.2f}"
         )
     console.print(tabela)
+    
+    opcao = int(input("Digite o ID da aposta que deseja alterar: "))
+    
+    nome = input("Digite o novo nome (ou pressione Enter para manter o atual): ")
+    selecao = input("Digite a nova seleção (ou pressione Enter para manter a atual): ")
+    valor_texto = input("Digite o novo valor (ou pressione Enter para manter o atual): ")
+    
+    if valor_texto.strip() == "":
+        valor = None
+    else:
+        valor = float(valor_texto)
+        if valor < 10.00:
+            print("[red]Valor deve ser no mínimo R$ 10.00[/red]")
+            return
+    
+    sql= """
+        update apostas
+        set nome = coalesce(nullif(%s, ''), nome),
+            selecao = coalesce(nullif(%s, ''), selecao),
+            valor = coalesce(%s, valor)
+        where id = %s
+        """
+    
+    cursor.execute(sql, (nome, selecao, valor, opcao))
+    conexao.commit()
