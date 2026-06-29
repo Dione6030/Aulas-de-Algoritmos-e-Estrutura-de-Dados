@@ -34,6 +34,9 @@ from operacoes.alterarCantor import alterarCantor
 from operacoes.excluirMusica import excluirMusica
 from operacoes.excluirCantor import excluirCantor
 from operacoes.pesquisar import pesquisarMusica
+from operacoes.grafico import gerarGrafico
+from operacoes.gerarJSON import gerarJSON
+from operacoes.geraHTML import gerarHTML
 
 console = Console()
 
@@ -48,6 +51,9 @@ menu = ("""
 8. Excluir Cantor
 9. Pesquisar Música
 10. Finalizar
+11. Gerar Gráfico de Quantidade de Músicas por Cantor
+12. Gerar JSON com as Músicas e Cantores
+13. Gerar Arquivo HTML com as Músicas e Cantores
 """)
 
 while True:
@@ -78,6 +84,12 @@ while True:
     elif opcao == 10:
         console.print("[bold cyan]Fim do Programa[/bold cyan]")
         break
+    elif opcao == 11:
+        gerarGrafico()
+    elif opcao == 12:
+        gerarJSON()
+    elif opcao == 13:
+        gerarHTML()
     else:
         console.print("[bold red]Opção inválida[/bold red]")
 
