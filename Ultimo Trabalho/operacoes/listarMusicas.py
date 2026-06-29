@@ -21,8 +21,8 @@ def listarMusicas():
         cantor = cursor.fetchone()
         tabela.add_row(
             musica[0], 
-            cantor[0], 
-            f"R$ {musica[2]:,}".replace(",", ".")
+            cantor[0],
+            f"{musica[2]:,}".replace(",", ".")
         )
     
     console.print(tabela)

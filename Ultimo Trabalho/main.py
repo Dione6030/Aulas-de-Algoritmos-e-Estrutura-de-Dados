@@ -29,8 +29,11 @@ from operacoes.incluirMusica import incluirMusica
 from operacoes.incluirCantor import incluirCantor
 from operacoes.listarMusicas import listarMusicas
 from operacoes.listarCantores import listarCantores
-from operacoes.alterar import alterar
-from operacoes.excluir import excluir
+from operacoes.alterarMusica import alterarMusica
+from operacoes.alterarCantor import alterarCantor
+from operacoes.excluirMusica import excluirMusica
+from operacoes.excluirCantor import excluirCantor
+from operacoes.pesquisar import pesquisarMusica
 
 console = Console()
 
@@ -43,7 +46,8 @@ menu = ("""
 6. Alterar Cantor
 7. Excluir Música
 8. Excluir Cantor
-9. Finalizar
+9. Pesquisar Música
+10. Finalizar
 """)
 
 while True:
@@ -61,7 +65,17 @@ while True:
         listarMusicas()
     elif opcao == 4:
         listarCantores()
+    elif opcao == 5:
+        alterarMusica()
+    elif opcao == 6:
+        alterarCantor()
+    elif opcao == 7:
+        excluirMusica()
+    elif opcao == 8:
+        excluirCantor()
     elif opcao == 9:
+        pesquisarMusica()
+    elif opcao == 10:
         console.print("[bold cyan]Fim do Programa[/bold cyan]")
         break
     else:
